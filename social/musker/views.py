@@ -14,3 +14,11 @@ def profile_list(request):
     else:
         messages.error(request,("Error: You need to login first"))
         return redirect('home')
+
+def profile(request,pk):
+    if request.user.is_authenticated:
+        my_profile = Profile.objects.get(user_id = pk)
+        return render(request,'profile.html',{ "my_profile" : my_profile })
+    else:
+        messages.error(request,("Erro: You are not loged in"))
+        return redirect('home')
