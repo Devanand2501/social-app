@@ -1,10 +1,26 @@
 from django.shortcuts import render,redirect
-from .models import Profile
+from .models import Profile,Tweet
 from django.contrib import messages
+from .forms import TweetForm
 
 # Create your views here.
 def home(request):
-    return render(request,'index.html',{})
+    if request.user.is_authenticated:
+        form = TweetForm(request.POST or None)
+        if request.method == "POST":
+            if form.is_valid():
+                tweet = form.save(commit=False)
+                tweet.user = request.user
+                tweet.save()
+                messages.success(request,"Message has been sent successfully")
+                return redirect("home")
+
+        tweets = Tweet.objects.all().order_by("-created_at")
+        return render(request,'index.html',{"tweets":tweets,"form":form})
+    else:
+        tweets = Tweet.objects.all().order_by("-created_at")
+        return render(request,'index.html',{"tweets":tweets})
+
 
 
 def profile_list(request):
@@ -18,6 +34,7 @@ def profile_list(request):
 def profile(request,pk):
     if request.user.is_authenticated:
         my_profile = Profile.objects.get(user_id = pk)
+        tweets = Tweet.objects.filter(user_id=pk).order_by("-created_at")
 
         if request.method == "POST":
             current_profile_user = request.user.profile
@@ -30,7 +47,7 @@ def profile(request,pk):
             elif action == "follow":
                 current_profile_user.follows.add(my_profile)
             current_profile_user.save()
-        return render(request,'profile.html',{ "my_profile" : my_profile })
+        return render(request,'profile.html',{ "my_profile" : my_profile,"tweets":tweets })
     else:
         messages.error(request,("Erro: You are not loged in"))
         return redirect('home')
