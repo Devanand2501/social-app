@@ -2,6 +2,7 @@ from django.shortcuts import render,redirect
 from .models import Profile,Tweet
 from django.contrib import messages
 from .forms import TweetForm
+from django.contrib.auth import authenticate,login,logout
 
 # Create your views here.
 def home(request):
@@ -21,6 +22,26 @@ def home(request):
         tweets = Tweet.objects.all().order_by("-created_at")
         return render(request,'index.html',{"tweets":tweets})
 
+def user_login(request):
+    if request.method == "POST":
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        user = authenticate(request,username=username,password=password)
+        if user is not None:
+            login(request,user)
+            messages.success(request,"You have successfully logged in")
+            return redirect("home")
+        else:
+            messages.error(request,"Failed to log in")
+            return redirect("login")
+
+    else:
+        return render(request,'login.html',{})
+
+def user_logout(request):
+    logout(request)
+    messages.success(request,"You have successfully logged out")
+    return redirect('home')
 
 
 def profile_list(request):
