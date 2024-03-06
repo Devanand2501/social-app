@@ -1,5 +1,6 @@
 from django.shortcuts import render,redirect
 from .models import Profile,Tweet
+from django.contrib.auth.models import User
 from django.contrib import messages
 from .forms import TweetForm,SignUpForm
 from django.contrib.auth import authenticate,login,logout
@@ -56,6 +57,20 @@ def register_user(request):
             messages.success(request,"WELCOME!!!")
             return redirect('home')
     return render(request,'register.html',{'form':form})
+
+def update_user(request):
+    if request.user.is_authenticated:
+        current_user = User.objects.get(id=request.user.id)
+        form = SignUpForm(request.POST or None,instance=current_user)
+        if form.is_valid():
+            form.save()
+            messages.info(request,"Profile updated Successfully")
+            return redirect('home')
+
+        return render(request,"update_user.html",{'form':form})
+    else:
+        messages.error("You must be logged In")
+        return redirect('home')
 
 def profile_list(request):
     if request.user.is_authenticated:

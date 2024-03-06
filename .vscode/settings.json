@@ -1,0 +1,8 @@
+{
+    "python.pythonPath": "${workspaceFolder}/virt/Scripts/python",  // for Windows
+    // or
+    // "python.pythonPath": "${workspaceFolder}/virt/bin/python",  // for Linux/Mac
+    "python.venvPath": "${workspaceFolder}/virt",
+    "python.autoComplete.extraPaths": ["${workspaceFolder}"],
+  }
+  
