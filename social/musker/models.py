@@ -24,6 +24,7 @@ class Profile(models.Model):
     follows = models.ManyToManyField(
         "self", related_name="followed_by", symmetrical=False, blank=True
     )
+    profile_photo = models.ImageField(null=True,blank=True,upload_to='images/')
     date_modified = models.DateTimeField(User, auto_now=True, auto_now_add=False)
 
     def __str__(self) -> str:

@@ -3,6 +3,11 @@
     // or
     // "python.pythonPath": "${workspaceFolder}/virt/bin/python",  // for Linux/Mac
     "python.venvPath": "${workspaceFolder}/virt",
-    "python.autoComplete.extraPaths": ["${workspaceFolder}"],
+    "python.autoComplete.extraPaths": [
+      "${workspaceFolder}"
+    ],
+    "python.analysis.extraPaths": [
+      "${workspaceFolder}"
+    ],
   }
   
