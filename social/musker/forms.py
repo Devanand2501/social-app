@@ -5,10 +5,10 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 
 class ProfilePicForm(forms.ModelForm):
-    profile_photo = forms.ImageField(label="Profile Picture")
+    profile_image = forms.ImageField(label="Profile Picture")
     class Meta:
         model = Profile
-        fields = ('profile_photo',)
+        fields = ('profile_image',)
 class TweetForm(forms.ModelForm):
     body = forms.CharField(required=True,
             widget=forms.widgets.Textarea(

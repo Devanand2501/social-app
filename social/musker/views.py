@@ -2,7 +2,7 @@ from django.shortcuts import render,redirect
 from .models import Profile,Tweet
 from django.contrib.auth.models import User
 from django.contrib import messages
-from .forms import TweetForm,SignUpForm
+from .forms import TweetForm,SignUpForm,ProfilePicForm
 from django.contrib.auth import authenticate,login,logout
 
 # Create your views here.
@@ -61,13 +61,21 @@ def register_user(request):
 def update_user(request):
     if request.user.is_authenticated:
         current_user = User.objects.get(id=request.user.id)
-        form = SignUpForm(request.POST or None,instance=current_user)
-        if form.is_valid():
-            form.save()
+        profile_user = Profile.objects.get(user__id=request.user.id)
+        # Get forms
+        user_form = SignUpForm(request.POST or None,request.FILES or None,instance=current_user)
+        profile_form = ProfilePicForm(request.POST or None,request.FILES or None, instance=profile_user)
+        print("form valid nahi hai")
+        if user_form.is_valid() and profile_form.is_valid():
+            user_form.save()
+            profile_form.save()
+            print("saved")
+            login(request, current_user)
+            print("loged in")
             messages.info(request,"Profile updated Successfully")
             return redirect('home')
 
-        return render(request,"update_user.html",{'form':form})
+        return render(request,"update_user.html",{'user_form':user_form,'profile_form':profile_form})
     else:
         messages.error("You must be logged In")
         return redirect('home')
