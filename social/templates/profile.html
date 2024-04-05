@@ -1,19 +1,42 @@
-{% extends "base.html" %} {% block container %}
+{% extends "base.html" %}
+{% load static %}
+{% block container %}
 <div>
   {% if my_profile %}
   <div class="container text-center">
     <div class="row">
       <div class="col-8">
         <h1>{{my_profile.user.username}}'s profile</h1>
-        {% if tweets %} {% for i in tweets %}
-        <div class="alert alert-dark" role="alert">{{i}}<br /></div>
-        {% endfor %} {% endif %}
+        {% if tweets %} 
+          {% for tweet in tweets %}
+          <div class="alert alert-dark" role="alert">
+            <div class="container">
+              <div class="row">
+                <div class="col-1">
+                  {% if my_profile.profile_image %}
+                    <img src="{{my_profile.profile_image.url}}" width="50" height="50" class="rounded-circle"  alt="{{my_profile.user.username}}">
+                    
+                  {% else %}
+                    <img src="{% static 'images/user_img.png' %}" width="50" height="50" class="rounded-circle"  alt="{{my_profile.user.username}}">
+                  {% endif %}
+                </div>
+                <div class="col-11">
+                    {{tweet.body}} <br>
+                    <small>
+                      ({{tweet.created_at}}) By @{{tweet.user.username}}
+                    </small>
+                </div><br><br>
+              </div>
+            </div>
+            <br /></div>
+          {% endfor %}
+        {% endif %}
       </div>
 
       <div class="col-4">
         <br /><br />
-        {% if my_profile.profile_photo %}
-          <img src="{{my_profile.profile_photo.url}}" width="200" height="200" alt="{{my_profile.profile_photo}}">
+        {% if my_profile.profile_image %}
+          <img src="{{my_profile.profile_image.url}}" width="200" height="200" class="rounded-circle" alt="{{my_profile.profile_photo}}">
         {% endif %}
         <div class="card">
           <div class="card-header">
@@ -55,7 +78,7 @@
         </form>
         <br />
         {% if request.user.id == my_profile.user.id %}
-        <a href="{% url 'update_user' %}" class="btn btn-outline-secondary"
+        <a href="{% url 'update_user' %}" class="btn btn-secondary"
           >Update User</a
         >
         {% endif %}

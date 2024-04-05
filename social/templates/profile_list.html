@@ -9,7 +9,12 @@
     <div class="card mb-3" style="max-width: 540px;">
         <div class="row g-0">
           <div class="col-md-4">
+            {% if i.profile_image %}
+            <img src="{{i.profile_image.url}}" class="img-fluid rounded-start" width="200"  height="200" alt="{{i.user.username}}">
+            {% else %}
             <img src="{% static 'images/user_img.png' %}" class="img-fluid rounded-start" alt="...">
+
+            {% endif %}
           </div>
           <div class="col-md-8">
             <div class="card-body">

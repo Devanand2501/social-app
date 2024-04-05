@@ -1,10 +1,10 @@
 {% extends "base.html" %}
-
+{% load static %}
 {% block container %}
     <div class="container text-center">
         <div class="row">
             <div class="col-8">
-                {% for i  in tweets %}
+                {% comment %} {% for i  in tweets %}
                     <div class="alert alert-dark" role="alert">
                         {{i.body}} <br>
                         <small class="text-muted">
@@ -12,6 +12,31 @@
                         </small>
                     </div>
                 {% endfor %}
+                {% if tweets %}  {% endcomment %}
+                {% for tweet in tweets %}
+                <div class="alert alert-dark" role="alert">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-1">
+                                {% if tweet.user.profile_image %}
+                                    <img src="{{tweet.user.profile_image.url}}" width="50" height="50" class="rounded-circle"  alt="{{my_profile.user.username}}">
+
+                                {% else %}
+                                    <img src="{% static 'images/user_img.png' %}" width="50" height="50" class="rounded-circle"  alt="{{tweet.user.user.username}}">
+                                {% endif %}
+                            </div>
+                            <div class="col-11">
+                                {{tweet.body}} <br>
+
+                                <small>
+                                ({{tweet.created_at}}) By <a href="{% url 'profile' tweet.user.id %}"> @{{tweet.user.username}} </a>
+                                </small>
+                            </div><br><br>
+                        </div>
+                    </div> <br />
+                </div>
+                {% endfor %}
+            {% comment %} {% endif %} {% endcomment %}
             </div>
             {% if form %}
             <div class="col-4">
