@@ -20,12 +20,16 @@
                                 {{tweet.body}} <br>
 
                                 <small>
-                                ({{tweet.created_at}}) By <a href="{% url 'profile' tweet.user.id %}"> @{{tweet.user.username}} </a> - {{tweet.number_of_likes}} likes 
-                                {% if user in tweet.likes.all %}
-                                <a href="{% url 'tweet_likes' tweet.id%}">Unlike</a>
-                                {% else %}
-                                <a href="{% url 'tweet_likes' tweet.id%}">Like</a>
-                                {% endif %}
+                                    ({{tweet.created_at}}) By <a href="{% url 'profile' tweet.user.id %}"> @{{tweet.user.username}} </a> - {{tweet.number_of_likes}} likes 
+                                    {% if user in tweet.likes.all %}
+                                        <a href="{% url 'tweet_likes' tweet.id%}">
+                                            <i class="fa fa-heart-o"></i>
+                                        </a>
+                                    {% else %}
+                                        <a href="{% url 'tweet_likes' tweet.id%}">
+                                            <i class="fa-solid fa-heart"></i>
+                                        </a>
+                                    {% endif %}
                                 </small>
                             </div><br><br>
                         </div>

@@ -116,7 +116,9 @@ def tweet_likes (request,pk):
             tweet.likes.remove(request.user.id)
         else:
             tweet.likes.add(request.user.id)
-        return redirect('home')
+        print(request.META['HTTP_REFERER'])
+        return redirect(request.META['HTTP_REFERER'])
+        # return redirect(request.META.get('HTTP_REFERER'))
 
     else:
         messages.error(request=request,message="You need to be logged in to like the message")

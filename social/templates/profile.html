@@ -23,7 +23,16 @@
                 <div class="col-11">
                     {{tweet.body}} <br>
                     <small>
-                      ({{tweet.created_at}}) By @{{tweet.user.username}}
+                      ({{tweet.created_at}}) By @{{tweet.user.username}} - {{tweet.number_of_likes}}
+                      {% if user in tweet.likes.all %}
+                      <a href="{% url 'tweet_likes' tweet.id%}">
+                        <i class="fa-solid fa-heart"></i>
+                    </a>
+                      {% else %}
+                      <a href="{% url 'tweet_likes' tweet.id%}">
+                        <i class="fa fa-heart-o"></i>
+                    </a>
+                      {% endif %}
                     </small>
                 </div><br><br>
               </div>
