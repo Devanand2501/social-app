@@ -9,6 +9,10 @@ class Tweet(models.Model):
     user = models.ForeignKey(User, on_delete=models.DO_NOTHING, related_name="tweets")
     body = models.CharField(max_length=280)
     created_at = models.DateTimeField(auto_now_add=True)
+    likes = models.ManyToManyField(User,blank=True)
+
+    def number_of_likes(self):
+        return self.likes.count()
 
     def __str__(self) -> str:
         return (

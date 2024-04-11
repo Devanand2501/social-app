@@ -1,4 +1,4 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect,get_object_or_404
 from .models import Profile,Tweet
 from django.contrib.auth.models import User
 from django.contrib import messages
@@ -108,3 +108,16 @@ def profile(request,pk):
     else:
         messages.error(request,("Erro: You are not loged in"))
         return redirect('home')
+
+def tweet_likes (request,pk):
+    if request.user.is_authenticated:
+        tweet = get_object_or_404(Tweet, id=pk)
+        if tweet.likes.filter(id=request.user.id):
+            tweet.likes.remove(request.user.id)
+        else:
+            tweet.likes.add(request.user.id)
+        return redirect('home')
+
+    else:
+        messages.error(request=request,message="You need to be logged in to like the message")
+        return redirect("home")
