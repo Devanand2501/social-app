@@ -26,12 +26,16 @@ SECRET_KEY = 'django-insecure-%mcn92ja^%8*&%emtw-l)o9$4zl&2(27@4df(#b9#9a*1&mcz5
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'ee50-202-71-157-236.ngrok-free.app',
+    'localhost',
+]
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    'django_social_share',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -60,6 +64,7 @@ TEMPLATES = [
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
+                'django.template.context_processors.request',
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',

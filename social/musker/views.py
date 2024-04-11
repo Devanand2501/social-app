@@ -123,3 +123,11 @@ def tweet_likes (request,pk):
     else:
         messages.error(request=request,message="You need to be logged in to like the message")
         return redirect("home")
+
+def tweet_show(request,pk): 
+    tweet = get_object_or_404(Tweet, id=pk)
+    if tweet:
+        return render(request, "show_tweet.html", {"tweet": tweet})
+    else:
+        messages.error(request=request,message="That tweet doesn't exist!")
+        return redirect("home")
