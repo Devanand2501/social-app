@@ -46,7 +46,36 @@
       <div class="col-4">
         <br /><br />
         {% if my_profile.profile_image %}
-          <img src="{{my_profile.profile_image.url}}" width="200" height="200" class="rounded-circle" alt="{{my_profile.profile_photo}}">
+          <img src="{{my_profile.profile_image.url}}" width="150" height="150" class="rounded-circle" alt="{{my_profile.profile_photo}}">
+        {% endif %}
+        <br>
+        {% if my_profile.portfolio_link %}
+          <a href="{{my_profile.portfolio_link}}" target="new">
+            <i class="fa-solid fa-link"></i></a>&nbsp;
+        {% endif %}
+        {% if my_profile.facebook_link %}
+          <a href="{{my_profile.facebook_link}}" target="new">
+            <i class="fa-brands fa-facebook"></i></a>
+          </a>&nbsp;
+        {% endif %}
+        {% if my_profile.instagram_link %}
+          <a href="{{my_profile.instagram_link}}" target="new">
+            <i class="fa-brands fa-instagram"></i></a>
+          </a>&nbsp;
+        {% endif %}
+        {% if my_profile.twitter_link %}
+          <a href="{{my_profile.twitter_link}}" target="new">
+            <i class="fa-brands fa-twitter"></i></a>
+          </a>&nbsp;
+        {% endif %}
+          {% if my_profile.linkedin_link %}
+          <a href="{{my_profile.linkedin_link}}" target="new">
+            <i class="fa-brands fa-linkedin"></i></a>
+          </a>&nbsp;
+        {% endif %}
+        <br><br>
+        {% if my_profile.profile_bio %}
+          <p aligh="justify">{{my_profile.profile_bio}}</p>
         {% endif %}
         <div class="card">
           <div class="card-header">

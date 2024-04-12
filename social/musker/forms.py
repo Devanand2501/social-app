@@ -6,9 +6,33 @@ from django.contrib.auth.models import User
 
 class ProfilePicForm(forms.ModelForm):
     profile_image = forms.ImageField(label="Profile Picture")
+    profile_bio = forms.CharField(label="Profile Bio", required=False,widget=forms.Textarea(attrs={
+        'class':'form-control',
+        'placeholder':'Profile Bio'
+    }))
+    portfolio_link = forms.CharField(label="",max_length=100, required=False,widget=forms.TextInput(attrs={
+        'class':'form-control',
+        'placeholder':'Portfolio Link'
+    }))
+    facebook_link = forms.CharField(label="",max_length=100, required=False,widget=forms.TextInput(attrs={
+        'class':'form-control',
+        'placeholder':'Facebook Link'
+    }))
+    instagram_link = forms.CharField(label="",max_length=100, required=False,widget=forms.TextInput(attrs={
+        'class':'form-control',
+        'placeholder':'Instagram Link'
+    }))
+    twitter_link = forms.CharField(label="",max_length=100, required=False,widget=forms.TextInput(attrs={
+        'class':'form-control',
+        'placeholder':'Twitter Link'
+    }))
+    linkedin_link = forms.CharField(label="",max_length=100, required=False,widget=forms.TextInput(attrs={
+        'class':'form-control',
+        'placeholder':'Linkedin Link'
+    }))
     class Meta:
         model = Profile
-        fields = ('profile_image',)
+        fields = ('profile_image','profile_bio','portfolio_link','facebook_link','instagram_link','twitter_link','linkedin_link')
 class TweetForm(forms.ModelForm):
     body = forms.CharField(required=True,
             widget=forms.widgets.Textarea(
