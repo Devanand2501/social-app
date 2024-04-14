@@ -88,6 +88,18 @@ def profile_list(request):
         messages.error(request,("Error: You need to login first"))
         return redirect('home')
 
+def search_tweet(request):
+    if request.user.is_authenticated:
+        searched = request.POST.get('search')
+        if not searched:
+            searched=""
+        tweets = Tweet.objects.filter(body__icontains=searched)
+        # tweets = Tweet.objects.filter(body__icontains=searched).order_by('-created_at')
+        return render(request,"search_tweet.html",{"searched":searched, "tweets":tweets})
+    else:
+        return redirect(request,"search_tweet.html")
+
+
 def followers(request,pk):
     if request.user.is_authenticated:
         if request.user.id == pk:
