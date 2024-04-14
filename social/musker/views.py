@@ -102,6 +102,20 @@ def unfollow(request,pk):
         messages.error(request,("Erro: You are not loged in"))
         return redirect('home')
 
+def follow(request,pk):
+    if request.user.is_authenticated:
+        profile_to_unfollow = Profile.objects.get(user_id = pk)
+
+        request.user.profile.follows.add(profile_to_unfollow)
+
+        request.user.profile.save()
+
+        messages.success(request,(f"You have successfully Followed {profile_to_unfollow}"))
+        return redirect(request.META["HTTP_REFERER"])
+    else:
+        messages.error(request,("Erro: You are not loged in"))
+        return redirect('home')
+
 def profile(request,pk):
     if request.user.is_authenticated:
         my_profile = Profile.objects.get(user_id = pk)
