@@ -48,7 +48,13 @@
             </div> <br />
         </div>
         {% endfor %}
-    {% comment %} {% endif %} {% endcomment %}
     </div>
+{% else %}
+    {% if searched == None or searched == "" %}
+    {% else %}
+        <h3>
+            No, User found with {{searched}}  keyword!
+        </h3>
+    {% endif %}
 {% endif %}
 {% endblock container %}

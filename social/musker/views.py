@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from django.contrib import messages
 from .forms import TweetForm,SignUpForm,ProfilePicForm
 from django.contrib.auth import authenticate,login,logout
+from django.db.models import Q
 
 # Create your views here.
 def home(request):
@@ -98,6 +99,17 @@ def search_tweet(request):
         return render(request,"search_tweet.html",{"searched":searched, "tweets":tweets})
     else:
         return redirect(request,"search_tweet.html")
+
+def search_user(request):
+    if request.user.is_authenticated:
+        searched = request.POST.get('search')
+        if not searched:
+            searched=""
+        profiles = User.objects.filter(username__icontains=searched)
+        # profiles = User.objects.filter(Q(username__icontains=searched) | Q(first_name__icontains=searched) | Q(last_name__icontains=searched))
+        return render(request,"search_user.html",{"searched":searched, "profiles":profiles})
+    else:
+        return redirect(request,"search_user.html")
 
 
 def followers(request,pk):
