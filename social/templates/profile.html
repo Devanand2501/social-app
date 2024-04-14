@@ -84,7 +84,9 @@
           <div class="card-body">
             <p class="card-text">
               {% for i in my_profile.follows.all %}
-              <a href="{% url 'profile' i.user.id %}"> @{{i}}</a>
+              <a href="{% url 'profile' i.user.id %}">@{{i}}</a>
+              <a href="{% url 'unfollow' i.user.id %}">
+                <i class="fa fa-undo" ></i></a>
               <br />
               {% endfor %}
             </p>
