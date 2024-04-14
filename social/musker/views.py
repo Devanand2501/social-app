@@ -88,6 +88,18 @@ def profile_list(request):
         messages.error(request,("Error: You need to login first"))
         return redirect('home')
 
+def followers(request,pk):
+    if request.user.is_authenticated:
+        if request.user.id == pk:
+            profiles = Profile.objects.get(user=request.user)
+            return render(request, 'followers.html',{"profiles":profiles})
+        else:
+            messages.error(request,("That's not your profile page!!!"))
+            return redirect('home')
+    else:
+        messages.error(request,("Error: You need to login first"))
+        return redirect('home')
+
 def unfollow(request,pk):
     if request.user.is_authenticated:
         profile_to_unfollow = Profile.objects.get(user_id = pk)
