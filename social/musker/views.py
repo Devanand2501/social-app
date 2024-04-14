@@ -183,3 +183,18 @@ def tweet_show(request,pk):
     else:
         messages.error(request=request,message="That tweet doesn't exist!")
         return redirect("home")
+
+def delete_tweet(request,pk): 
+    if request.user.is_authenticated:
+        tweet = get_object_or_404(Tweet, id=pk)
+        if request.user.username==tweet.user.username:
+            tweet.delete()
+            messages.success(request=request,message="Tweet Deleted Successfully!")
+            return redirect(request.META['HTTP_REFERER'])
+        else:
+            messages.error(request=request,message="Tweet doesn't belong to different user!")
+            return redirect('home')
+
+    else:
+        messages.error(request=request,message="You need to be logged in!")
+        return redirect('home')

@@ -33,8 +33,14 @@
                       {% endif %}
                       &nbsp;&nbsp;
                       <a href="{% url 'tweet_show' tweet.id %}">
-                          <i class="fa fa-share"></i></a>
+                        <i class="fa fa-share"></i></a>
+                        &nbsp;&nbsp;
+                        {% if request.user.username == my_profile.user.username %}
+                        <a href="{% url 'delete_tweet' tweet.id %}">
+                          <i class="fa fa-trash"></i></a>
+                        {% endif %}
                     </small>
+                    
                 </div><br><br>
               </div>
             </div>
