@@ -17,4 +17,5 @@ urlpatterns = [
     path("tweet_likes/<int:pk>",views.tweet_likes,name="tweet_likes"),
     path("tweet_show/<int:pk>",views.tweet_show,name="tweet_show"),
     path("delete_tweet/<int:pk>",views.delete_tweet,name="delete_tweet"),
+    path("edit_tweet/<int:pk>",views.edit_tweet,name="edit_tweet"),
 ]

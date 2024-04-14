@@ -38,6 +38,9 @@
                         {% if request.user.username == my_profile.user.username %}
                         <a href="{% url 'delete_tweet' tweet.id %}">
                           <i class="fa fa-trash"></i></a>
+                        &nbsp;&nbsp;
+                        <a href="{% url 'edit_tweet' tweet.id %}">
+                          <i class="fa fa-edit"></i></a>
                         {% endif %}
                     </small>
                     

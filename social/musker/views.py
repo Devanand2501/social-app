@@ -198,3 +198,24 @@ def delete_tweet(request,pk):
     else:
         messages.error(request=request,message="You need to be logged in!")
         return redirect('home')
+
+def edit_tweet(request,pk): 
+    if request.user.is_authenticated:
+        tweet = get_object_or_404(Tweet, id=pk)
+        if request.user.username==tweet.user.username:
+            form = TweetForm(request.POST or None,instance=tweet)
+            if request.method == "POST":
+                if form.is_valid():
+                    tweet = form.save(commit=False)
+                    tweet.user = request.user
+                    tweet.save()
+                    messages.success(request,"Message has been  updated  successfully.")
+                    return redirect("home")
+            else:
+                return render(request,'edit_tweet.html',{ "form" : form,"tweet":tweet })
+        else:
+            messages.error(request=request,message="Tweet doesn't belong to you!")
+            return redirect('home')
+    else:
+        messages.error(request=request,message="You need to be logged in!")
+        return redirect('home')
