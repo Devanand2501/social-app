@@ -73,7 +73,7 @@ def update_user(request):
             print("saved")
             login(request, current_user)
             print("loged in")
-            messages.info(request,"Profile updated Successfully")
+            messages.success(request,"Profile updated Successfully")
             return redirect('home')
 
         return render(request,"update_user.html",{'user_form':user_form,'profile_form':profile_form})

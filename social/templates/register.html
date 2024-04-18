@@ -6,6 +6,12 @@
     <form method="POST">
         {% csrf_token %}
         {{form.as_p}}
+
+        {% for error in form.username.errors %}
+            <script>
+                alert( "{{error|escape}}");
+            </script>
+        {% endfor %}
         <br>
         <button type="submit" class="btn btn-secondary">Register</button>
     </form>
