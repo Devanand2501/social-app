@@ -15,7 +15,7 @@ def home(request):
                 tweet = form.save(commit=False)
                 tweet.user = request.user
                 tweet.save()
-                messages.success(request,"Message has been sent successfully")
+                messages.success(request,"Tweet uploaded successfully")
                 return redirect("home")
 
         tweets = Tweet.objects.all().order_by("-created_at")
@@ -98,7 +98,7 @@ def search_tweet(request):
         # tweets = Tweet.objects.filter(body__icontains=searched).order_by('-created_at')
         return render(request,"search_tweet.html",{"searched":searched, "tweets":tweets})
     else:
-        return redirect(request,"search_tweet.html")
+        return render(request,"search_tweet.html",{})
 
 def search_user(request):
     if request.user.is_authenticated:
@@ -109,7 +109,7 @@ def search_user(request):
         # profiles = User.objects.filter(Q(username__icontains=searched) | Q(first_name__icontains=searched) | Q(last_name__icontains=searched))
         return render(request,"search_user.html",{"searched":searched, "profiles":profiles})
     else:
-        return redirect(request,"search_user.html")
+        return render(request,"search_user.html",{})
 
 
 def followers(request,pk):
@@ -147,7 +147,7 @@ def unfollow(request,pk):
         messages.success(request,(f"You have successfully unfollowed {profile_to_unfollow}"))
         return redirect(request.META["HTTP_REFERER"])
     else:
-        messages.error(request,("Erro: You are not loged in"))
+        messages.error(request,("Error: You are not loged in"))
         return redirect('home')
 
 def follow(request,pk):
@@ -161,7 +161,7 @@ def follow(request,pk):
         messages.success(request,(f"You have successfully Followed {profile_to_unfollow}"))
         return redirect(request.META["HTTP_REFERER"])
     else:
-        messages.error(request,("Erro: You are not loged in"))
+        messages.error(request,("Error: You are not loged in"))
         return redirect('home')
 
 def profile(request,pk):
@@ -182,7 +182,7 @@ def profile(request,pk):
             current_profile_user.save()
         return render(request,'profile.html',{ "my_profile" : my_profile,"tweets":tweets })
     else:
-        messages.error(request,("Erro: You are not loged in"))
+        messages.error(request,("Error: You are not loged in"))
         return redirect('home')
 
 def tweet_likes (request,pk):
@@ -216,7 +216,7 @@ def delete_tweet(request,pk):
             messages.success(request=request,message="Tweet Deleted Successfully!")
             return redirect(request.META['HTTP_REFERER'])
         else:
-            messages.error(request=request,message="Tweet doesn't belong to different user!")
+            messages.error(request=request,message="Tweet belongs to different user!")
             return redirect('home')
 
     else:
